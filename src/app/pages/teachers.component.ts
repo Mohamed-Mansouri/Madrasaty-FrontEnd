@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DataService } from '../services/data.service';
 import { Teacher } from '../models/interfaces';
+import { TeacherDialogComponent } from '../components/teacher-dialog/teacher-dialog.component';
 
 @Component({
   selector: 'app-teachers',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TeacherDialogComponent],
   template: `
     <div class="container">
       <div class="page-header">
@@ -15,7 +16,7 @@ import { Teacher } from '../models/interfaces';
         <p>Manage teaching staff and their subjects</p>
       </div>
 
-      <div class="controls-container" *ngIf="!showAddForm">
+      <div class="controls-container">
         <div class="search-filters">
           <input 
             type="text" 
@@ -35,13 +36,13 @@ import { Teacher } from '../models/interfaces';
             <option value="Arts">Arts</option>
           </select>
         </div>
-        <button class="btn btn-primary" (click)="showAddForm = true">
+        <button class="btn btn-primary" (click)="openAddDialog()">
           <span class="material-icons" style="font-size: 16px;">add</span>
           Add Teacher
         </button>
       </div>
 
-      <div class="data-table table-responsive" *ngIf="!showAddForm">
+      <div class="data-table table-responsive">
         <table>
           <thead>
             <tr>
@@ -83,7 +84,7 @@ import { Teacher } from '../models/interfaces';
               </td>
               <td>
                 <div class="action-buttons">
-                  <button class="btn btn-secondary" (click)="editTeacher(teacher)">
+                  <button class="btn btn-secondary" (click)="openEditDialog(teacher)">
                     <span class="material-icons" style="font-size: 14px;">edit</span>
                     <span class="btn-text">Edit</span>
                   </button>
@@ -100,107 +101,15 @@ import { Teacher } from '../models/interfaces';
           No teachers found matching your criteria.
         </div>
       </div>
-
-      <div class="form-container" *ngIf="showAddForm">
-        <h2>{{ editingTeacher ? 'Edit Teacher' : 'Add New Teacher' }}</h2>
-        <form (ngSubmit)="saveTeacher()" #teacherForm="ngForm">
-          <div class="form-grid-2">
-            <div class="form-group">
-              <label for="firstName">First Name</label>
-              <input 
-                type="text" 
-                id="firstName" 
-                name="firstName"
-                [(ngModel)]="currentTeacher.firstName" 
-                required>
-            </div>
-            <div class="form-group">
-              <label for="lastName">Last Name</label>
-              <input 
-                type="text" 
-                id="lastName" 
-                name="lastName"
-                [(ngModel)]="currentTeacher.lastName" 
-                required>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input 
-              type="email" 
-              id="email" 
-              name="email"
-              [(ngModel)]="currentTeacher.email" 
-              required>
-          </div>
-          <div class="form-grid-2">
-            <div class="form-group">
-              <label for="phone">Phone</label>
-              <input 
-                type="tel" 
-                id="phone" 
-                name="phone"
-                [(ngModel)]="currentTeacher.phone">
-            </div>
-            <div class="form-group">
-              <label for="employeeId">Employee ID</label>
-              <input 
-                type="text" 
-                id="employeeId" 
-                name="employeeId"
-                [(ngModel)]="currentTeacher.employeeId" 
-                required>
-            </div>
-          </div>
-          <div class="form-grid-2">
-            <div class="form-group">
-              <label for="department">Department</label>
-              <select 
-                id="department" 
-                name="department"
-                [(ngModel)]="currentTeacher.department" 
-                required>
-                <option value="">Select Department</option>
-                <option value="Mathematics">Mathematics</option>
-                <option value="Science">Science</option>
-                <option value="English">English</option>
-                <option value="History">History</option>
-                <option value="Arts">Arts</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="status">Status</label>
-              <select 
-                id="status" 
-                name="status"
-                [(ngModel)]="currentTeacher.status" 
-                required>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="subjects">Subjects (comma-separated)</label>
-            <input 
-              type="text" 
-              id="subjects" 
-              name="subjects"
-              [value]="currentTeacher.subjects?.join(', ') || ''"
-              (input)="updateSubjects($event)"
-              placeholder="e.g., Algebra, Calculus, Statistics">
-          </div>
-          <div style="display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap;">
-            <button type="submit" class="btn btn-primary" [disabled]="!teacherForm.form.valid">
-              {{ editingTeacher ? 'Update Teacher' : 'Add Teacher' }}
-            </button>
-            <button type="button" class="btn btn-secondary" (click)="cancelForm()">
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
     </div>
+
+    <!-- Teacher Dialog -->
+    <app-teacher-dialog
+      [isOpen]="showDialog"
+      [editingTeacher]="editingTeacher"
+      (close)="closeDialog()"
+      (save)="saveTeacher($event)">
+    </app-teacher-dialog>
   `,
   styles: [`
     @media (max-width: 768px) {
@@ -221,9 +130,8 @@ export class TeachersComponent implements OnInit {
   filteredTeachers: Teacher[] = [];
   searchTerm = '';
   departmentFilter = '';
-  showAddForm = false;
+  showDialog = false;
   editingTeacher: Teacher | null = null;
-  currentTeacher: Partial<Teacher> = this.getEmptyTeacher();
 
   constructor(private dataService: DataService) {}
 
@@ -248,10 +156,46 @@ export class TeachersComponent implements OnInit {
     });
   }
 
-  editTeacher(teacher: Teacher) {
+  openAddDialog() {
+    this.editingTeacher = null;
+    this.showDialog = true;
+  }
+
+  openEditDialog(teacher: Teacher) {
     this.editingTeacher = teacher;
-    this.currentTeacher = { ...teacher };
-    this.showAddForm = true;
+    this.showDialog = true;
+  }
+
+  closeDialog() {
+    this.showDialog = false;
+    this.editingTeacher = null;
+  }
+
+  saveTeacher(teacherData: Partial<Teacher>) {
+    if (this.editingTeacher) {
+      this.dataService.updateTeacher(this.editingTeacher.id, teacherData).subscribe(() => {
+        this.closeDialog();
+        // Refresh the list
+        this.dataService.getTeachers().subscribe(teachers => {
+          this.teachers = teachers;
+          this.filterTeachers();
+        });
+      });
+    } else {
+      const newTeacher = {
+        ...teacherData,
+        hireDate: new Date()
+      } as Omit<Teacher, 'id'>;
+      
+      this.dataService.addTeacher(newTeacher).subscribe(() => {
+        this.closeDialog();
+        // Refresh the list
+        this.dataService.getTeachers().subscribe(teachers => {
+          this.teachers = teachers;
+          this.filterTeachers();
+        });
+      });
+    }
   }
 
   deleteTeacher(id: string) {
@@ -260,46 +204,5 @@ export class TeachersComponent implements OnInit {
         // Data will be updated via the observable subscription
       });
     }
-  }
-
-  saveTeacher() {
-    if (this.editingTeacher) {
-      this.dataService.updateTeacher(this.editingTeacher.id, this.currentTeacher).subscribe(() => {
-        this.cancelForm();
-      });
-    } else {
-      const newTeacher = {
-        ...this.currentTeacher,
-        hireDate: new Date()
-      } as Omit<Teacher, 'id'>;
-      
-      this.dataService.addTeacher(newTeacher).subscribe(() => {
-        this.cancelForm();
-      });
-    }
-  }
-
-  updateSubjects(event: any) {
-    const value = event.target.value;
-    this.currentTeacher.subjects = value ? value.split(',').map((s: string) => s.trim()) : [];
-  }
-
-  cancelForm() {
-    this.showAddForm = false;
-    this.editingTeacher = null;
-    this.currentTeacher = this.getEmptyTeacher();
-  }
-
-  private getEmptyTeacher(): Partial<Teacher> {
-    return {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      employeeId: '',
-      department: '',
-      subjects: [],
-      status: 'active'
-    };
   }
 }

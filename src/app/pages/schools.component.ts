@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { School } from '../models/interfaces';
+import { SchoolDialogComponent } from '../components/school-dialog/school-dialog.component';
 
 @Component({
   selector: 'app-schools',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SchoolDialogComponent],
   template: `
     <div class="container">
       <div class="page-header">
@@ -15,7 +16,7 @@ import { School } from '../models/interfaces';
         <p>Manage all schools in the system</p>
       </div>
 
-      <div class="controls-container" *ngIf="!showAddForm">
+      <div class="controls-container">
         <div class="search-filters">
           <input 
             type="text" 
@@ -32,13 +33,13 @@ import { School } from '../models/interfaces';
             <option value="inactive">Inactive</option>
           </select>
         </div>
-        <button class="btn btn-primary" (click)="showAddForm = true">
+        <button class="btn btn-primary" (click)="openAddDialog()">
           <span class="material-icons" style="font-size: 16px;">add</span>
           Add School
         </button>
       </div>
 
-      <div class="schools-grid" *ngIf="!showAddForm">
+      <div class="schools-grid">
         <div *ngFor="let school of filteredSchools" class="school-card">
           <div class="school-header">
             <h3>{{ school.name }}</h3>
@@ -78,116 +79,22 @@ import { School } from '../models/interfaces';
               <span class="material-icons" style="font-size: 14px;">settings</span>
               Manage
             </button>
-            <button class="btn btn-secondary" (click)="editSchool(school)">
+            <button class="btn btn-secondary" (click)="openEditDialog(school)">
               <span class="material-icons" style="font-size: 14px;">edit</span>
               Edit
             </button>
           </div>
         </div>
       </div>
-
-      <div class="form-container" *ngIf="showAddForm">
-        <h2>{{ editingSchool ? 'Edit School' : 'Add New School' }}</h2>
-        <form (ngSubmit)="saveSchool()" #schoolForm="ngForm">
-          <div class="form-grid-2">
-            <div class="form-group">
-              <label for="name">School Name</label>
-              <input 
-                type="text" 
-                id="name" 
-                name="name"
-                [(ngModel)]="currentSchool.name" 
-                required>
-            </div>
-            <div class="form-group">
-              <label for="principalName">Principal Name</label>
-              <input 
-                type="text" 
-                id="principalName" 
-                name="principalName"
-                [(ngModel)]="currentSchool.principalName" 
-                required>
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label for="address">Address</label>
-            <textarea 
-              id="address" 
-              name="address"
-              [(ngModel)]="currentSchool.address" 
-              rows="3"
-              required>
-            </textarea>
-          </div>
-          
-          <div class="form-grid-2">
-            <div class="form-group">
-              <label for="phone">Phone</label>
-              <input 
-                type="tel" 
-                id="phone" 
-                name="phone"
-                [(ngModel)]="currentSchool.phone" 
-                required>
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input 
-                type="email" 
-                id="email" 
-                name="email"
-                [(ngModel)]="currentSchool.email" 
-                required>
-            </div>
-          </div>
-          
-          <div class="form-grid-3">
-            <div class="form-group">
-              <label for="establishedYear">Established Year</label>
-              <input 
-                type="number" 
-                id="establishedYear" 
-                name="establishedYear"
-                [(ngModel)]="currentSchool.establishedYear" 
-                min="1800" 
-                max="2024"
-                required>
-            </div>
-            <div class="form-group">
-              <label for="totalStudents">Total Students</label>
-              <input 
-                type="number" 
-                id="totalStudents" 
-                name="totalStudents"
-                [(ngModel)]="currentSchool.totalStudents" 
-                min="0"
-                required>
-            </div>
-            <div class="form-group">
-              <label for="status">Status</label>
-              <select 
-                id="status" 
-                name="status"
-                [(ngModel)]="currentSchool.status" 
-                required>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-              </select>
-            </div>
-          </div>
-          
-          <div style="display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap;">
-            <button type="submit" class="btn btn-primary" [disabled]="!schoolForm.form.valid">
-              {{ editingSchool ? 'Update School' : 'Add School' }}
-            </button>
-            <button type="button" class="btn btn-secondary" (click)="cancelForm()">
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
     </div>
+
+    <!-- School Dialog -->
+    <app-school-dialog
+      [isOpen]="showDialog"
+      [editingSchool]="editingSchool"
+      (close)="closeDialog()"
+      (save)="saveSchool($event)">
+    </app-school-dialog>
   `,
   styles: [`
     .schools-grid {
@@ -310,9 +217,8 @@ export class SchoolsComponent implements OnInit {
   filteredSchools: School[] = [];
   searchTerm = '';
   statusFilter = '';
-  showAddForm = false;
+  showDialog = false;
   editingSchool: School | null = null;
-  currentSchool: Partial<School> = this.getEmptySchool();
 
   constructor(private authService: AuthService) {}
 
@@ -336,42 +242,31 @@ export class SchoolsComponent implements OnInit {
     });
   }
 
+  openAddDialog() {
+    this.editingSchool = null;
+    this.showDialog = true;
+  }
+
+  openEditDialog(school: School) {
+    this.editingSchool = school;
+    this.showDialog = true;
+  }
+
+  closeDialog() {
+    this.showDialog = false;
+    this.editingSchool = null;
+  }
+
+  saveSchool(schoolData: Partial<School>) {
+    if (this.editingSchool) {
+      console.log('Update school:', schoolData);
+    } else {
+      console.log('Add school:', schoolData);
+    }
+    this.closeDialog();
+  }
+
   manageSchool(schoolId: string) {
     this.authService.switchSchool(schoolId).subscribe();
-  }
-
-  editSchool(school: School) {
-    this.editingSchool = school;
-    this.currentSchool = { ...school };
-    this.showAddForm = true;
-  }
-
-  saveSchool() {
-    if (this.editingSchool) {
-      console.log('Update school:', this.currentSchool);
-    } else {
-      console.log('Add school:', this.currentSchool);
-    }
-    this.cancelForm();
-  }
-
-  cancelForm() {
-    this.showAddForm = false;
-    this.editingSchool = null;
-    this.currentSchool = this.getEmptySchool();
-  }
-
-  private getEmptySchool(): Partial<School> {
-    return {
-      name: '',
-      address: '',
-      phone: '',
-      email: '',
-      principalName: '',
-      establishedYear: new Date().getFullYear(),
-      totalStudents: 0,
-      totalTeachers: 0,
-      status: 'active'
-    };
   }
 }
