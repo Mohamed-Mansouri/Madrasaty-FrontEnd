@@ -812,10 +812,21 @@ tajweed.gen:hover {
 }
 
 .Quran-page {
-    font-size: 40px;
-    display: block;
-    unicode-bidi: isolate;
-    direction: rtl;
+  direction: rtl;
+  font-family: "Amiri", "Scheherazade", "Traditional Arabic", serif;
+  font-size: 30px;
+  line-height: 2.2;
+  background: #fdf6e3;
+  color: #000;
+  padding: 40px;
+  margin: 20px auto;
+  max-width: 800px;
+  border: 10px solid #d4af37;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  text-align: justify;
+  word-spacing: 5px;
+  position: relative;
 }
 
 
