@@ -35,18 +35,20 @@ export class QuranBookComponent {
     const x = "بِسْمِ [h:1[ٱ]للَّهِ [h:2[ٱ][l[ل]رَّحْمَ[n[ـٰ]نِ [h:3[ٱ][l[ل]رَّح[p[ِي]مِ";
     const parseTajweed = new Tajweed();
     const htmlString = parseTajweed.parse(x,true,1,1,correctnessDict)
-    this.parsedHtml = this.sanitizer.bypassSecurityTrustHtml(htmlString);
-    //this.getQuranPage();
+   // this.parsedHtml = this.sanitizer.bypassSecurityTrustHtml(htmlString);
+    this.getQuranPage();
 
   }
   getQuranPage() {
+     const stored = localStorage.getItem('tajweedCorrectness');
+    const correctnessDict = stored ? JSON.parse(stored) : {};
   this.httpclient.get("https://api.alquran.cloud/v1/page/1/quran-tajweed")
     .subscribe({
       next: (response: any) => {
         const parseTajweed = new Tajweed();
         var htmlString ='';
         for (const item of response.data.ayahs) {
-          htmlString+= parseTajweed.parse(item.text, true,item.number,item.surah.number,this.tajweedCorrectness);
+          htmlString+= parseTajweed.parse(item.text, true,item.number,item.surah.number,correctnessDict);
           htmlString+='۞';
           }
           this.parsedHtml = this.sanitizer.bypassSecurityTrustHtml(htmlString);
