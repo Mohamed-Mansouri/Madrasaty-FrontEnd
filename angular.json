@@ -26,12 +26,12 @@
             }
           },
           "options": {
-            "assets": [],
+            "assets": ["src/assets"],
             "index": "src/index.html",
             "browser": "src/main.ts",
             "outputPath": "dist/demo",
             "polyfills": ["zone.js"],
-            "scripts": [],
+            "scripts": ["src/assets/tajweed.js"],
             "styles": ["src/global_styles.css"],
             "tsConfig": "tsconfig.app.json"
           }

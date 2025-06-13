@@ -14,6 +14,7 @@ import { TeachersComponent } from './app/pages/teachers.component';
 import { CoursesComponent } from './app/pages/courses.component';
 import { CalendarComponent } from './app/pages/calendar.component';
 import { SchoolsComponent } from './app/pages/schools.component';
+import { provideHttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -81,6 +82,7 @@ const routes = [
 
 bootstrapApplication(App, {
   providers: [
-    provideRouter(routes)
+    provideRouter(routes),
+    provideHttpClient()
   ]
 });
