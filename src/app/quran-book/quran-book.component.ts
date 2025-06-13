@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, input, ViewChild } from '@angular/core';
 import { QuranService } from '../services/quran.service';
 import { TajweedViewerComponent } from './tajweed-viewer/tajweed-viewer.component';
 import { CommonModule } from '@angular/common';
@@ -28,6 +28,9 @@ export class QuranBookComponent {
   "1-1-4": false,
   "1-1-5": true,
 }
+pageId : number = 1 ; ; 
+Page : any ; 
+//todo : need to implement multiples surahs in one page ! 
   ngOnInit(): void 
   {
      const stored = localStorage.getItem('tajweedCorrectness');
@@ -36,15 +39,29 @@ export class QuranBookComponent {
     const parseTajweed = new Tajweed();
     const htmlString = parseTajweed.parse(x,true,1,1,correctnessDict)
    // this.parsedHtml = this.sanitizer.bypassSecurityTrustHtml(htmlString);
-    this.getQuranPage();
+    this.LoadQuranPage();
 
   }
-  getQuranPage() {
+  NextPage()
+  {
+    this.pageId++ ; 
+    this.LoadQuranPage();
+
+  }
+  PreviousPage()
+  {
+    this.pageId-- ; 
+    this.LoadQuranPage();
+
+  }
+
+  LoadQuranPage() {
      const stored = localStorage.getItem('tajweedCorrectness');
     const correctnessDict = stored ? JSON.parse(stored) : {};
-  this.httpclient.get("https://api.alquran.cloud/v1/page/1/quran-tajweed")
+  this.httpclient.get(`https://api.alquran.cloud/v1/page/${this.pageId}/quran-tajweed`)
     .subscribe({
       next: (response: any) => {
+        this.Page = response ; 
         const parseTajweed = new Tajweed();
         var htmlString ='';
         for (const item of response.data.ayahs) {
@@ -94,5 +111,11 @@ onTajweedClick(id: string | null) {
   }
 
   console.log(`Toggled ${id} → ${newValue}`);
+const input = "1-1-1";
+const [surah, ayah, tajweedRuleOcc] = input.split('-').map(Number);
+
+const TajweedInfo = { surah, ayah, tajweedRuleOcc };
+
+console.log(TajweedInfo);
 }
 }

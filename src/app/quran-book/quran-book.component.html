@@ -1,1 +1,12 @@
-<div #quranPage class ='Quran-page' [innerHTML]="parsedHtml"></div>
+<div class="quran-page">
+  <div class="Quran-title">
+  {{ Page.data.surahs[1].name}}
+  </div>
+
+  <div #quranPage class="Quran-text" [innerHTML]="parsedHtml"></div>
+
+  <div class="page-controls">
+    <button (click)="PreviousPage()">← الصفحة السابقة</button>
+    <button (click)="NextPage()">الصفحة التالية →</button>
+  </div>
+</div>

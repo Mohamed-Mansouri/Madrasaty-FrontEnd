@@ -811,19 +811,14 @@ tajweed.gen:hover {
     cursor:pointer;
 }
 
-.Quran-page {
+.Quran-text {
   direction: rtl;
-  font-family: "Amiri", "Scheherazade", "Traditional Arabic", serif;
+  font-family: inherit;
   font-size: 30px;
   line-height: 2.2;
   background: #fdf6e3;
   color: #000;
-  padding: 40px;
-  margin: 20px auto;
-  max-width: 800px;
-  border: 10px solid #d4af37;
-  border-radius: 15px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  max-width: 100%;
   text-align: justify;
   word-spacing: 5px;
   position: relative;
@@ -836,4 +831,73 @@ tajweed.correct {
 
 tajweed.incorrect {
   background-color: #e6939a !important; /* light red */
+}
+.quran-page {
+  direction: rtl;
+  font-family: "Scheherazade New", "Amiri", "Traditional Arabic", serif;
+  font-size: 30px;
+  line-height: 2.3;
+  background: #eef8f0; /* soft greenish background */
+  color: #222;
+  padding: 40px;
+  margin: 20px auto;
+  max-width: 900px;
+  border: 8px solid #9ac37f;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(0, 100, 0, 0.2);
+  text-align: justify;
+  word-spacing: 5px;
+  position: relative;
+}
+
+.Quran-title {
+  font-size: 38px;
+  font-weight: bold;
+  text-align: center;
+  color: #0b3d0b;
+  margin-bottom: 40px;
+  background: linear-gradient(to right, #cceacc, #b7ddb7, #cceacc);
+  border: 3px double #0b3d0b;
+  border-radius: 15px;
+  box-shadow: 0 0 12px rgba(0, 100, 0, 0.3);
+  position: relative;
+  letter-spacing: 2px;
+}
+
+
+
+
+
+.Quran-text {
+  font-size: 30px;
+  line-height: 2.3;
+  background: transparent;
+  color: #000;
+  max-width: 100%;
+  text-align: justify;
+  word-spacing: 5px;
+  direction: rtl;
+}
+
+.page-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.page-controls button {
+  background-color: #4e8c4e;
+  color: #fff;
+  font-size: 20px;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 0 5px rgba(0, 100, 0, 0.3);
+}
+
+.page-controls button:hover {
+  background-color: #3d723d;
 }
