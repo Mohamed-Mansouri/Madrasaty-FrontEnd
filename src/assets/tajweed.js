@@ -136,13 +136,13 @@ class Tajweed{
      * @param  boolean $fixWebkit Tries to fix for Chrome and Safari. This is experimental and has known problems.
      * @return string             Parsed text that can be used to display tajweed
      */
-    parse(text, fixWebkit = false)    
+    parse(text, fixWebkit = false,ayahnumber,surahnumber)    
     {
         if (fixWebkit) {
-            return this.webkitFix(this.closeParsing(this.parseTajweed(text)));
+            return this.webkitFix(this.closeParsing(this.parseTajweed(text,ayahnumber,surahnumber)));
             }
 
-            return this.closeParsing(this.parseTajweed(text));
+            return this.closeParsing(this.parseTajweed(text,ayahnumber,surahnumber));
     }
 
     /**
@@ -150,15 +150,22 @@ class Tajweed{
      * @param  string $text Verse text
      * @return String
      */
-    parseTajweed(text)
+    parseTajweed(text,ayahnumber,surahnumber)
     {
-        this.meta.forEach((meta) => {
-            let _re = new RegExp("(\\"+meta.identifier+")", "ig");  
-            text = text.replace(_re, `<tajweed class="${meta.default_css_class}" data-type="${meta.type}" data-description="${meta.description}" data-tajweed="`)
-        })
-        
+        let idCounter = 1;
 
-        return text;
+            // Build a regex for all identifiers
+            const identifiers = this.meta.map(meta => meta.identifier.replace('[', '\\[')).join('|');
+            const globalRegex = new RegExp(identifiers, 'g');
+
+            // Replace each tajweed element in order of appearance
+            return text.replace(globalRegex, (match) => {
+                const meta = this.meta.find(m => m.identifier.toLowerCase() === match.toLowerCase());
+                if (!meta) return match;
+
+                const tag = `<tajweed id="tajweed-${surahnumber}-${ayahnumber}-${idCounter++}" class="${meta.default_css_class}" data-type="${meta.type}" data-description="${meta.description}" data-tajweed="`;
+                return tag;
+            });
     }
 
     /**
@@ -177,7 +184,7 @@ class Tajweed{
         // After
         text = text.replace('/<\/tajweed>(\S)/', '&zwj;${0}')
         // Before
-        text = text.replace('/(\S)<tajweed class="(.*?)" data-type="(.*?)" data-description="(.*?)" data-tajweed="(.*?)">(\S)/', '${1}<tajweed class="${2}" data-type="${3}" data-description="${4}" data-tajweed="${5}">&zwj;&zwj;${6}')
+        text = text.replace('/(\S)<tajweed class="(.*?) clickable" data-type="(.*?)" data-description="(.*?)" data-tajweed="(.*?)">(\S)/', '${1}<tajweed class="${2}" data-type="${3}" data-description="${4}" data-tajweed="${5}">&zwj;&zwj;${6}')
 
         // Let's remove all joiners where not needed for an Alif and a Waw
         text = text.replace(['ٱ&zwj;'], ['ٱ']);

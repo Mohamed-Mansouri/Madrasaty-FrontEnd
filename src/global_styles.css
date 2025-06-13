@@ -805,3 +805,12 @@ tajweed.madda_normal {
 tajweed.idgh_mus:hover {
     background-color: #D7D7D7;
 }
+
+
+
+.Quran-page {
+    font-size: 40px;
+    display: block;
+    unicode-bidi: isolate;
+    direction: rtl;
+}
