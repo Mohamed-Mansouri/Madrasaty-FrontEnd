@@ -136,10 +136,10 @@ class Tajweed{
      * @param  boolean $fixWebkit Tries to fix for Chrome and Safari. This is experimental and has known problems.
      * @return string             Parsed text that can be used to display tajweed
      */
-    parse(text, fixWebkit = false,ayahnumber,surahnumber)    
+    parse(text, fixWebkit = false,ayahnumber,surahnumber,correctnessDict)    
     {
         if (fixWebkit) {
-            return this.webkitFix(this.closeParsing(this.parseTajweed(text,ayahnumber,surahnumber)));
+            return this.webkitFix(this.closeParsing(this.parseTajweed(text,correctnessDict,ayahnumber,surahnumber)));
             }
 
             return this.closeParsing(this.parseTajweed(text,ayahnumber,surahnumber));
@@ -150,9 +150,9 @@ class Tajweed{
      * @param  string $text Verse text
      * @return String
      */
-    parseTajweed(text,ayahnumber,surahnumber)
+    parseTajweed(text,correctnessDict,ayah,surah)
     {
-        let idCounter = 1;
+          let counter = 0;
 
             // Build a regex for all identifiers
             const identifiers = this.meta.map(meta => meta.identifier.replace('[', '\\[')).join('|');
@@ -162,8 +162,11 @@ class Tajweed{
             return text.replace(globalRegex, (match) => {
                 const meta = this.meta.find(m => m.identifier.toLowerCase() === match.toLowerCase());
                 if (!meta) return match;
-
-                const tag = `<tajweed id="tajweed-${surahnumber}-${ayahnumber}-${idCounter++}" class="${meta.default_css_class}" data-type="${meta.type}" data-description="${meta.description}" data-tajweed="`;
+                counter+=1;
+                const id = `${surah}-${ayah}-${counter}`;
+                const isCorrect = correctnessDict[id] ?? false; // default to false
+                const correctnessClass = isCorrect ? 'correct' : 'incorrect';
+                const tag = `<tajweed id="${surah}-${ayah}-${counter}" class="${meta.default_css_class} ${correctnessClass}" data-type="${meta.type}" data-description="${meta.description}" data-tajweed="`;
                 return tag;
             });
     }

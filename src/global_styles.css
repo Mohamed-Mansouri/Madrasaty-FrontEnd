@@ -806,11 +806,23 @@ tajweed.idgh_mus:hover {
     background-color: #D7D7D7;
 }
 
-
+tajweed.gen:hover {
+    background-color: blue !important;
+    cursor:pointer;
+}
 
 .Quran-page {
     font-size: 40px;
     display: block;
     unicode-bidi: isolate;
     direction: rtl;
+}
+
+
+tajweed.correct {
+  background-color: #b9f6c7 !important; /* light green */
+}
+
+tajweed.incorrect {
+  background-color: #e6939a !important; /* light red */
 }
