@@ -863,10 +863,38 @@ tajweed.incorrect {
   position: relative;
   letter-spacing: 2px;
 }
+.quran-rule-info {
+  direction: rtl;
+  font-family: "Scheherazade New", "Amiri", "Traditional Arabic", serif;
+  font-size: 20px;
+  line-height: 2.3;
+  background: #eef8f0; /* soft greenish background */
+  color: #222;
+  padding: 40px;
+  margin: 20px auto;
+  width: 400px;
+  max-width: 400px;
+  border: 8px solid #9ac37f;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(0, 100, 0, 0.2);
+  text-align: justify;
+  word-spacing: 5px;
+  position: relative;
+}
 
-
-
-
+.quran-rule-info-title {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: #0b3d0b;
+  margin-bottom: 40px;
+  background: linear-gradient(to right, #cceacc, #b7ddb7, #cceacc);
+  border: 3px double #0b3d0b;
+  border-radius: 15px;
+  box-shadow: 0 0 12px rgba(0, 100, 0, 0.3);
+  position: relative;
+  letter-spacing: 2px;
+}
 
 .Quran-text {
   font-size: 30px;
@@ -900,4 +928,88 @@ tajweed.incorrect {
 
 .page-controls button:hover {
   background-color: #3d723d;
+}
+
+.quran-rule-info label {
+  display: block;
+  font-weight: bold;
+  font-size: 18px;
+  color: #0b3d0b;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.quran-rule-info textarea {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 18px;
+  font-family: "Scheherazade New", "Amiri", "Traditional Arabic", serif;
+  border: 3px double #0b3d0b;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0, 100, 0, 0.3);
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  direction: rtl;
+  text-align: right;
+  resize: vertical; /* يسمح للمستخدم بتغيير الطول عمودياً فقط */
+  min-height: 100px;
+}
+
+.quran-rule-info textarea:focus {
+  border-color: #4e8c4e;
+  box-shadow: 0 0 12px rgba(78, 140, 78, 0.8);
+}
+
+.rating-section {
+  margin-top: 30px;
+}
+
+.rating-section label {
+  font-weight: bold;
+  font-size: 18px;
+  color: #0b3d0b;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.star-rating {
+  direction: rtl;
+  font-size: 30px;
+  unicode-bidi: bidi-override;
+  color: #ccc;
+  display: flex;
+  gap: 5px;
+}
+
+.star-rating span {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.star-rating span.filled {
+  color: #f7b32b;
+  text-shadow: 0 0 5px rgba(247, 179, 43, 0.6);
+}
+
+.grade-section {
+  margin-top: 30px;
+}
+
+.grade-section label {
+  font-weight: bold;
+  font-size: 18px;
+  color: #0b3d0b;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.grade-section select {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  border: 2px solid #9ac37f;
+  border-radius: 8px;
+  font-family: "Scheherazade New", "Amiri", serif;
+  background: #f9fff9;
+  color: #0b3d0b;
 }

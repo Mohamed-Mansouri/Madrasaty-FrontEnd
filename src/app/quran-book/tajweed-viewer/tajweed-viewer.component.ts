@@ -56,4 +56,5 @@ getCharacters(): { char: string, index: number}[] {
     }));
 }
 
+
 }

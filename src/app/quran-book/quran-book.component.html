@@ -1,12 +1,44 @@
-<div class="quran-page">
-  <div class="Quran-title">
-  {{ Page.data.surahs[1].name}}
+<div style="display: flex;flex-direction: row;">
+  <div class="quran-rule-info" *ngIf="showinfo">
+    
+    <div class="quran-rule-info-title">
+       {{selectedinfo.Name}}
+    </div>
+    
+    <div>
+        {{selectedinfo.description}}
+    </div>
+     
+    <div class="grade-section">
+      <label for="grade">الدرجة</label>
+      <select id="grade" [(ngModel)]="studentGrade">
+        <option *ngFor="let grade of gradeOptions" [value]="grade">
+          {{ grade }}
+        </option>
+      </select>
+    </div>
+    
+    <div>
+        <label for="notes">الملاحظات:</label>
+        <textarea id="notes" rows="4" placeholder="اكتب ملاحظاتك هنا..."></textarea>
+    </div>
+    
+    
+      
+  </div>
+  <div class="quran-page">
+    <div class="Quran-title">
+      {{ Page.data.surahs[1].name}}
   </div>
 
-  <div #quranPage class="Quran-text" [innerHTML]="parsedHtml"></div>
+    <div #quranPage class="Quran-text" [innerHTML]="parsedHtml"></div>
 
-  <div class="page-controls">
-    <button (click)="PreviousPage()">← الصفحة السابقة</button>
-    <button (click)="NextPage()">الصفحة التالية →</button>
+    <div class="page-controls">
+      <button (click)="PreviousPage()"> → الصفحة السابقة</button>
+      <button (click)="NextPage()">الصفحة التالية ← </button>
+    </div>
   </div>
+
+
+
 </div>
