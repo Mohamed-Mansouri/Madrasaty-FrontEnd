@@ -192,7 +192,8 @@ class Tajweed{
         // Let's remove all joiners where not needed for an Alif and a Waw
         text = text.replace(['ٱ&zwj;'], ['ٱ']);
 
-        return text;
+        return text//.replace(/([\u0600-\u06FF])/g, '<span class="letter" data-letter="$1">$1</span>');
+
     }
 
     /**

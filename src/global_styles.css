@@ -851,7 +851,7 @@ tajweed.incorrect {
 }
 
 .Quran-title {
-  font-size: 38px;
+  font-size: 32px;
   font-weight: bold;
   text-align: center;
   color: #0b3d0b;
@@ -1012,4 +1012,13 @@ tajweed.incorrect {
   font-family: "Scheherazade New", "Amiri", serif;
   background: #f9fff9;
   color: #0b3d0b;
+}
+
+.letter {
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.letter:hover {
+  color: red;
 }
