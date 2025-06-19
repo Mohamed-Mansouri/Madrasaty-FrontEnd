@@ -5,14 +5,15 @@ import { DashboardStats, Student, Teacher, Course, Exam } from '../models/interf
 import { Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { QuranBookComponent } from '../quran-book/quran-book.component';
+import { QuranBook2Component } from '../quran-book2/quran-book2.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule,QuranBookComponent],
+  imports: [CommonModule,QuranBookComponent,QuranBook2Component],
   template: `
     <div class="container">
-      <app-quran-book/>
+      <app-quran-book2/>
     </div>
   `
 })

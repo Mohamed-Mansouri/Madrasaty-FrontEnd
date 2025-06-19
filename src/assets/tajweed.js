@@ -197,17 +197,18 @@ class Tajweed{
     }
     ParseAyah(Ayah)//{number:x,text:y}
     {
-          const words = Ayah.text.trim().split(/\s+/);
+       const words = Ayah.text.trim().split(/\s+/);
 
-  const wordHtml = words.map((word) => {
-    const letters = word.replace(
-      /([\u0600-\u06FF])/g,
-      `<span class="letter ayah-${Ayah.number}" data-letter="$1">$1</span>`
-    );
-    return `<div class="word">${letters}</div>`;
+  const wordHtml = words.map(word => {
+    const wrapped = [...word].map(char =>
+      /[\u0600-\u06FF]/.test(char)
+        ? `<span class="letter ayah-${Ayah.number}">${char}</span>`
+        : char
+    ).join('');
+    return wrapped; // return as plain inline flow
   });
 
-  return `<div class="ayah" data-ayah="${Ayah.number}">${wordHtml.join('')}<span class="ayah-number">${Ayah.number}</span></div>`;
+  return `${wordHtml.join(' ')} <span class="ayah-number">${Ayah.number}</span>`;
     }
 
     /**

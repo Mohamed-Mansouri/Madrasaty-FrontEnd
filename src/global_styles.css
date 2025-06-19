@@ -839,7 +839,7 @@ tajweed.correct {
 tajweed.incorrect {
   background-color: #e6939a !important; /* light red */
 }
-.quran-page {
+.Quran-page {
   direction: rtl;
   font-family: "Scheherazade New", "Amiri", "Traditional Arabic", serif;
   font-size: 30px;
@@ -1039,23 +1039,17 @@ tajweed.incorrect {
   direction: rtl;
   text-align: justify;
   text-align-last: right;
-  width: 100%;
-  margin-bottom: 12px;
-  font-size: 0; /* prevent whitespace gaps from inline-block */
-}
-
-.ayah {
-  display: inline-block;
-  font-size: 0; /* prevent extra gaps between inline-block children */
-}
-
-.word {
-  display: inline-block;
-  margin: 0 4px;
-  white-space: nowrap;
-  font-size: 24px; /* reset */
   font-family: 'Amiri', serif;
-  line-height: 2;
+  font-size: 28px;
+  line-height: 2.4;
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.line::after {
+  content: '';
+  display: inline-block;
+  width: 100%;
 }
 
 .letter {
@@ -1065,6 +1059,6 @@ tajweed.incorrect {
 .ayah-number {
   font-size: 18px;
   font-weight: bold;
-  margin-right: 4px;
-  vertical-align: middle;
+  margin-right: 0.5ch;
+  white-space: nowrap;
 }
