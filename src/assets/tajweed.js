@@ -166,7 +166,7 @@ class Tajweed{
                 const id = `${surah}-${ayah}-${counter}`;
                 const isCorrect = correctnessDict[id] ?? false; // default to false
                 const correctnessClass = isCorrect ? 'correct' : 'incorrect';
-                const tag = `<tajweed id="${surah}-${ayah}-${counter}" class="${meta.default_css_class} ${correctnessClass}" data-type="${meta.type}" data-description="${meta.description}" data-tajweed="`;
+                const tag = `<span id="${surah}-${ayah}-${counter}" class="${meta.default_css_class} ${correctnessClass}" data-type="${meta.type}" data-description="${meta.description}" data-tajweed="`;
                 return tag;
             });
     }
@@ -192,8 +192,22 @@ class Tajweed{
         // Let's remove all joiners where not needed for an Alif and a Waw
         text = text.replace(['ٱ&zwj;'], ['ٱ']);
 
-        return text//.replace(/([\u0600-\u06FF])/g, '<span class="letter" data-letter="$1">$1</span>');
+        return text.replace(/([\u0600-\u06FF])/g, '<span class="letter" data-letter="$1">$1</span>');
 
+    }
+    ParseAyah(Ayah)//{number:x,text:y}
+    {
+          const words = Ayah.text.trim().split(/\s+/);
+
+  const wordHtml = words.map((word) => {
+    const letters = word.replace(
+      /([\u0600-\u06FF])/g,
+      `<span class="letter ayah-${Ayah.number}" data-letter="$1">$1</span>`
+    );
+    return `<div class="word">${letters}</div>`;
+  });
+
+  return `<div class="ayah" data-ayah="${Ayah.number}">${wordHtml.join('')}<span class="ayah-number">${Ayah.number}</span></div>`;
     }
 
     /**
