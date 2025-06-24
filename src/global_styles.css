@@ -1013,6 +1013,7 @@ tajweed.incorrect {
 
 .letter:hover {
   color: red;
+  font-size: inherit;
 }
 
 
@@ -1035,13 +1036,14 @@ tajweed.incorrect {
   width: 100%;
 }
 
-.letter {
-  font-size: inherit;
-}
-
 .ayah-number {
   font-size: 18px;
   font-weight: bold;
   margin-right: 0.5ch;
   white-space: nowrap;
+}
+
+.red
+{
+    color: blue;
 }

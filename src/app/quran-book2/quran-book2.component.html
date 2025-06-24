@@ -1,6 +1,16 @@
 
-
+<button (click)="toggleMode()">
+  {{ mode === 'ayah' ? 'Switch to Character Mode' : 'Switch to Ayah Mode' }}
+</button>
 
 <div class="Quran-page" >
-    <div #quranPage class="Quran-text" [innerHTML]="parsedHtml"></div>
+    <div #quranPage class="Quran-text">
+          <app-quran-line *ngFor="let line of pageLines" [line]="line" [tajweedMap]="tajweedMap"></app-quran-line>
+    </div>
+</div>
+
+<div *ngIf="activeAyah" class="note-modal">
+  <h3>Note for Ayah {{ activeAyah }}</h3>
+  <textarea [(ngModel)]="ayahNotes[activeAyah]"></textarea>
+  <button (click)="closeNoteModal()">Close</button>
 </div>

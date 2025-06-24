@@ -1,0 +1,32 @@
+<div class="line">
+  <ng-container *ngFor="let ayah of line.ayas">
+
+    <!-- Surah Title -->
+    <ng-container *ngIf="ayah.number === -1">
+      <div class="suraHeaderFrame">{{ ayah.text }}</div>
+    </ng-container>
+
+    <!-- Basmalah -->
+    <ng-container *ngIf="ayah.number === -2">
+      <div class="basmalah">{{ ayah.text }}</div>
+    </ng-container>
+
+    <!-- Regular Ayah (character mode with innerHTML per char) -->
+    <ng-container *ngIf="ayah.number > 0">
+      <span class="ayah-group">
+        <ng-container *ngFor="let char of splitAyahChars(ayah)">
+          <span 
+            class="letter ayah-{{ ayah.number }} {{char.ruleClass}}" 
+          
+            [innerHTML]="char.char">
+          </span>
+        </ng-container>
+
+        <ng-container *ngIf="ayah.isend">
+          <span class="ayah-number" (click)="highlightAyah(ayah.number)">﴿{{ ayah.number }}﴾</span>
+        </ng-container>
+      </span>
+    </ng-container>
+
+  </ng-container>
+</div>
