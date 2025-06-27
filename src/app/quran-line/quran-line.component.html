@@ -16,6 +16,8 @@
       <span class="ayah-group">
         <ng-container *ngFor="let char of splitAyahChars(ayah)">
           <span 
+            [attr.is-tajweed] = "char.isTajweed"
+
             class="letter ayah-{{ ayah.number }} {{char.ruleClass}}" 
           
             [innerHTML]="char.char">

@@ -51,7 +51,7 @@ ngOnInit(): void {
 
     return `<span class="ayah-group">${ayahText}${number}</span>`;
   }
-  splitAyahChars(ayah: Ayah): { char: string, index: number, word: number, ruleClass?: string }[] {
+  splitAyahChars(ayah: Ayah): { char: string, index: number, word: number, ruleClass?: string , isTajweed : boolean}[] {
   const chartst = [];
   const words = ayah.text2.split(' ');
   let wordIndex = ayah.startwordindex ?? 0;
@@ -73,7 +73,8 @@ ngOnInit(): void {
             char,
             index: i,
             word: wordIndex,
-            ruleClass: linkedmatchrule ? 'red' : ''
+            ruleClass: linkedmatchrule ? 'red' : '',
+            isTajweed: linkedmatchrule ? 1 : 0,
           });
             linkedmatchrule = null;
           }else
@@ -82,7 +83,8 @@ ngOnInit(): void {
                         char,
                         index: i,
                         word: wordIndex,
-                        ruleClass: matchRule ? this.getTajweedClass(matchRule.rule) : ''
+                        ruleClass: matchRule ? this.getTajweedClass(matchRule.rule) : '',
+                        isTajweed: matchRule ? 1 : 0,
                       });
           }
 
@@ -95,7 +97,7 @@ ngOnInit(): void {
         }
 
         // Add space after word if needed
-        chartst.push({ char: ' ', index: -1, word: wordIndex, ruleClass: '' });
+        chartst.push({ char: ' ', index: -1, word: wordIndex, ruleClass: '', isTajweed:0 });
         localwordindex++;
         wordIndex++;
   }
