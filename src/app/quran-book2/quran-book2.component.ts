@@ -4,10 +4,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { QuranLineComponent } from '../quran-line/quran-line.component';
-interface Ayah {
-  number: number;
-  text: string;
-}
+import { Ayah, AyahTajweedData, PageLine } from '../models/TajweedID';
 
 declare var Tajweed: any;
 
@@ -19,40 +16,32 @@ declare var Tajweed: any;
 })
 export class QuranBook2Component {
 ayahs: Ayah[] = [];
-pageLines: any[] = [];
+pageLines: PageLine[] = [];
 parsedHtml: SafeHtml = '';
   constructor(private http: HttpClient,private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
 
-    this.http.get<any>('assets/tajweed.json').subscribe({
-    next: data => {
-      this.loadTajweedAnnotations(data);
-    },
-    error: err => {
-      console.error('Failed to load tajweed annotations:', err);
-    }
-  });
 
-  this.http.get(`assets/Quran230625.json`).subscribe({
-    next: (response: any[]) => {
-      this.pageLines = response.filter(item => item.page === 354);
-      /*const parseTajweed = new Tajweed();
-      let htmlString = '';
+  this.http.get(`assets/quran_lines_with_text2.json`).subscribe({
+    next: (response: PageLine[]) => {
+      let tempPagelines = response.filter(item => item.page === 3)
+      //this.pageLines = response.filter(item => item.page === 3);
 
-      for (const line of pageEntries) {
-        htmlString += `
-          <div class="line">
-        `;
-
-        for (const ayahpart of line.ayas) {
-          htmlString += parseTajweed.ParseAyah(ayahpart);
-        }
-
-        htmlString += `</div>\n`;
-      }
-
-      this.parsedHtml = this.sanitizer.bypassSecurityTrustHtml(htmlString);*/
+      let tajweed : AyahTajweedData[];
+       this.http.get<AyahTajweedData[]>('assets/tajweed_annotations.json').subscribe({
+                      next: data => {
+                        tajweed = data;
+                         tempPagelines.forEach(line=>{
+                        let surahid = line.surahid;
+                        this.loadTajweedIntoAyahs(tajweed,line.ayas,surahid); 
+                        this.pageLines = tempPagelines;
+                          })
+                      },
+                      error: err => {
+                        console.error('Failed to load tajweed annotations:', err);
+                      }
+                    });
     },
     error: (err) => {
       console.error('Failed to load ayah:', err);
@@ -97,21 +86,16 @@ applyModeHighlighting() {
     });
   }, 100);
 }
-tajweedMap: Record<number, { [ayah: number]: { [index: number]: string } }> = {};
-loadTajweedAnnotations(data: any[]) {
-  for (const entry of data) {
-    const surah = entry.surah;
-    const ayah = entry.ayah;
 
-    if (!this.tajweedMap[surah]) this.tajweedMap[surah] = {};
-    if (!this.tajweedMap[surah][ayah]) this.tajweedMap[surah][ayah] = {};
+loadTajweedIntoAyahs(data: AyahTajweedData[], ayahs: Ayah[],surahid:number) {
 
-    for (const ann of entry.annotations) {
-      for (let i = ann.start; i <= ann.end; i++) {
-        this.tajweedMap[surah][ayah][i] = ann.rule;
-      }
+  ayahs.forEach(ayah => {
+    let match = data.find(d => d.surah === surahid && d.ayah === ayah.number);
+    if (match) {
+      ayah.annotations = match.annotations;
     }
-  }
+  });
+  
 }
 
 }
