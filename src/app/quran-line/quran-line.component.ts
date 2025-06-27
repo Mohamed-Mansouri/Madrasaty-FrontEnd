@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { Ayah, TajweedAnnotation } from '../models/TajweedID';
+import { Ayah, TajweedAnnotation, TajweedRule } from '../models/TajweedID';
 import { elementAt } from 'rxjs';
 @Component({
   selector: 'app-quran-line',
@@ -82,7 +82,7 @@ ngOnInit(): void {
                         char,
                         index: i,
                         word: wordIndex,
-                        ruleClass: matchRule ? 'red' : ''
+                        ruleClass: matchRule ? this.getTajweedClass(matchRule.rule) : ''
                       });
           }
 
@@ -102,4 +102,26 @@ ngOnInit(): void {
 
   return chartst;
 }
+getTajweedClass(rule: TajweedRule): string {
+  switch (rule) {
+    case TajweedRule.HamzatWasl:
+      return 'hamzat_wasl';
+    case TajweedRule.LamShamsiyyah:
+      return 'lam_shamsiyyah';
+    case TajweedRule.Silent:
+      return 'silent';
+    case TajweedRule.Madda2:
+      return 'madd_2';
+    case TajweedRule.Madda246:
+      return 'madd_246';
+    case TajweedRule.Qalaqah:
+      return 'qalaqah';
+    case TajweedRule.Ghunnah:
+      return 'ghunnah';
+    case TajweedRule.Ikhafa:
+      return 'ikhafa';
+  }
+}
+
+
 }
