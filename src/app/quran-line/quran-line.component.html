@@ -14,18 +14,18 @@
     <!-- Regular Ayah (character mode with innerHTML per char) -->
     <ng-container *ngIf="ayah.number > 0">
       <span class="ayah-group">
-        <ng-container *ngFor="let char of splitAyahChars(ayah)">
+        <ng-container *ngFor="let char of splitAyahChars(ayah,line)">
           <span 
             [attr.is-tajweed] = "char.isTajweed"
-
-            class="letter ayah-{{ ayah.number }} {{char.ruleClass}}" 
-          
-            [innerHTML]="char.char">
+            id="-{{ ayah.number }}-"
+            class="letter ayah-{{ ayah.number }} {{char.ruleClass}}"     
+            [innerHTML]="char.char"
+            (click)="OnCharClick(char)">
           </span>
         </ng-container>
 
         <ng-container *ngIf="ayah.isend">
-          <span class="ayah-number" (click)="highlightAyah(ayah.number)">﴿{{ ayah.number }}﴾</span>
+          <span class="ayah-number"  (click)="highlightAyah(ayah.number)">﴿{{ ayah.number }}﴾</span>
         </ng-container>
       </span>
     </ng-container>

@@ -27,6 +27,6 @@ export class SurahNavigatorComponent {
 onInputChange(newValue: number) {
   this.Onmanual.emit(newValue); 
 }
-
-
+inputValue: number;
+ 
 }

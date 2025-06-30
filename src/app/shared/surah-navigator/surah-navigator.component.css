@@ -1,5 +1,6 @@
 .number-picker-container {
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   background-color: transparent;
@@ -14,10 +15,9 @@
   font-weight: bold;
   border: 1px solid #4caf50;
   border-radius: 6px;
-  outline: none;
   padding: 4px 8px;
   height: 30px;
-  transition: border-color 0.3s ease-in-out;
+  background-color: #4caf50;
 }
 
 .surah-input:focus {
@@ -44,8 +44,8 @@ button[mat-icon-button] {
 
 button[mat-icon-button]:disabled {
   color: #a5d6a7;
-  height: 20px;
-  width: 30px;
+  width: 40px; /* bigger width */
+  height: 30px; /* square button */
 }
 
 mat-icon

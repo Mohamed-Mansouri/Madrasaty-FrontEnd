@@ -49,3 +49,14 @@ export class PageLine
     ayas: Ayah[];
     surahid: number;
   }
+
+  export class AyahChar {
+  char: string;
+  index: number;
+  word: number;
+  ruleClass?: string;
+  isTajweed: boolean;
+  ayah:number;
+  surah:number;
+  page:number;
+}

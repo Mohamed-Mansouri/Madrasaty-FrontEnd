@@ -1,34 +1,39 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { Ayah, TajweedAnnotation, TajweedRule } from '../models/TajweedID';
+import { Ayah, AyahChar, PageLine, TajweedAnnotation, TajweedRule } from '../models/TajweedID';
 import { elementAt } from 'rxjs';
+import { SharedService } from '../services/notificationService';
 @Component({
   selector: 'app-quran-line',
   templateUrl: './quran-line.component.html',
   imports:[FormsModule,CommonModule],
-  styleUrls: ['./quran-line.component.css']
+  styleUrls: ['./quran-line.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class QuranLineComponent {
    @Input() line: any; // expects one line from the JSON
   html: SafeHtml = '';
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(private sanitizer: DomSanitizer , private sharedService: SharedService) {}
 ngOnInit(): void {
 
   }
 
   highlightAyah(number: number): void {
+    console.log(`enetered highlight`);
     // Remove any existing highlights
-    document.querySelectorAll('.letter.highlight').forEach(el => {
+   /* document.querySelectorAll('.highlight').forEach(el => {
       el.classList.remove('highlight');
-    });
-
+    });*/
+if (!number) return;
     // Highlight all matching letters
-    document.querySelectorAll(`.letter.ayah-${number}`).forEach(el => {
+    let items = document.querySelectorAll(`.ayah-${number}`);
+    items.forEach(el => {
       el.classList.add('highlight');
     });
+    console.log(`Found ${items.length} elements with class .ayah-${number}`);
   }
 
 
@@ -51,7 +56,7 @@ ngOnInit(): void {
 
     return `<span class="ayah-group">${ayahText}${number}</span>`;
   }
-  splitAyahChars(ayah: Ayah): { char: string, index: number, word: number, ruleClass?: string , isTajweed : boolean}[] {
+  splitAyahChars(ayah: Ayah,line:PageLine):AyahChar[] {
   const chartst = [];
   const words = ayah.text2.split(' ');
   let wordIndex = ayah.startwordindex ?? 0;
@@ -59,7 +64,7 @@ ngOnInit(): void {
   let linkedchar : boolean = false ; 
   let linkedmatchrule : TajweedAnnotation ;
   for (const word of words) {
-        const chars = [...word]; // split word into graphemes (could use Intl.Segmenter if needed)
+        const chars = [...word]; 
         for (let i = 0; i < chars.length; i++) {
           const char = chars[i];
          
@@ -75,6 +80,9 @@ ngOnInit(): void {
             word: wordIndex,
             ruleClass: linkedmatchrule ? 'red' : '',
             isTajweed: linkedmatchrule ? 1 : 0,
+            ayah:ayah.number,
+            surah:line.surahid,
+            page:line.page
           });
             linkedmatchrule = null;
           }else
@@ -85,6 +93,9 @@ ngOnInit(): void {
                         word: wordIndex,
                         ruleClass: matchRule ? this.getTajweedClass(matchRule.rule) : '',
                         isTajweed: matchRule ? 1 : 0,
+                        ayah:ayah.number,
+                        surah:line.surahid,
+                        page:line.page
                       });
           }
 
@@ -97,7 +108,9 @@ ngOnInit(): void {
         }
 
         // Add space after word if needed
-        chartst.push({ char: ' ', index: -1, word: wordIndex, ruleClass: '', isTajweed:0 });
+        chartst.push({ char: ' ', index: -1, word: wordIndex, ruleClass: '', isTajweed:0,ayah:ayah.number,
+            surah:line.surahid,
+            page:line.page });
         localwordindex++;
         wordIndex++;
   }
@@ -125,5 +138,8 @@ getTajweedClass(rule: TajweedRule): string {
   }
 }
 
+OnCharClick(char:AyahChar){
+    this.sharedService.selectAyah(char);
+  }
 
 }

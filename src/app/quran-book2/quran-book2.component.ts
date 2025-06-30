@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { QuranLineComponent } from '../quran-line/quran-line.component';
-import { Ayah, AyahTajweedData, PageLine } from '../models/TajweedID';
+import { Ayah, AyahChar, AyahTajweedData, PageLine } from '../models/TajweedID';
 import { SurahNavigatorComponent } from '../shared/surah-navigator/surah-navigator.component';
 
 declare var Tajweed: any;
@@ -22,6 +22,7 @@ parsedHtml: SafeHtml = '';
 pageNumber : number = 1 ; 
 surahMin : number = 1 ; 
 surahMax : number = 604 ; 
+@Output() OnCharClick = new EventEmitter<AyahChar>();
   constructor(private http: HttpClient,private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {

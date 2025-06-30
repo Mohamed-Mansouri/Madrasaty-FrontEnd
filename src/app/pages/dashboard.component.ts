@@ -6,15 +6,14 @@ import { Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { QuranBookComponent } from '../quran-book/quran-book.component';
 import { QuranBook2Component } from '../quran-book2/quran-book2.component';
+import { TasmiiSessionComponent } from '../tasmii/tasmii-session/tasmii-session.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule,QuranBookComponent,QuranBook2Component],
+  imports: [CommonModule,TasmiiSessionComponent],
   template: `
-    <div class="container">
-      <app-quran-book2/>
-    </div>
+          <app-tasmii-session></app-tasmii-session>
   `
 })
 export class DashboardComponent implements OnInit {

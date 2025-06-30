@@ -18,3 +18,8 @@
 .qalaqah { color: #DD0008; }
 .ghunnah { color: #FF7E1E; }
 .ikhafa { color: #9400A8; }  
+
+.highlight
+{
+  background-color: lightcoral;
+}

@@ -1,0 +1,9 @@
+.tasmii-main
+{
+  align-items: stretch; /* ensures both children are aligned vertically */
+  justify-content: center; /* or center/start depending on layout */
+  height: 100%; /* or a specific height if needed */
+  width: 100%;
+  direction: rtl;
+  margin: 15px;
+}

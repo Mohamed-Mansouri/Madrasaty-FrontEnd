@@ -1,30 +1,14 @@
-
-<!--<button (click)="toggleMode()">
-  {{ mode === 'ayah' ? 'Switch to Character Mode' : 'Switch to Ayah Mode' }}
-</button>-->
-<div class="Quran-main" style="display: flex; flex-direction: column; gap: 10px;">
-      <div class="Quran-page" >
-          <div #quranPage class="Quran-text">
-                <app-quran-line *ngFor="let line of pageLines" [line]="line"></app-quran-line>
-          </div>
-          
-          <div class="bottom-line"></div>
-  <div class="pageNavigator">
-        <app-surah-navigator  
-          [value]="pageNumber" 
-          [min]="surahMin" 
-          [max]="surahMax"
-          (Onincrement)="increment()"
-          (Ondecrement)="decrement()"
-          (Onmanual)="handleManualInput($event)">
-        </app-surah-navigator>
-  </div>
+<div class="Quran-page white-rounded-shd">
+      <div #quranPage class="Quran-text">
+            <app-quran-line *ngFor="let line of pageLines" [line]="line"></app-quran-line>
       </div>
-      
-    <div *ngIf="activeAyah" class="note-modal">
-      <h3>Note for Ayah {{ activeAyah }}</h3>
-      <textarea [(ngModel)]="ayahNotes[activeAyah]"></textarea>
-      <button (click)="closeNoteModal()">Close</button>
-    </div>
 
+      <div class="bottom-line"></div>
+      <div class="pageNavigator">
+            <app-surah-navigator [value]="pageNumber" [min]="surahMin" [max]="surahMax" 
+                  (Onincrement)="increment()"
+                  (Ondecrement)="decrement()" (Onmanual)="handleManualInput($event)">
+            </app-surah-navigator>
+      </div>
 </div>
+
