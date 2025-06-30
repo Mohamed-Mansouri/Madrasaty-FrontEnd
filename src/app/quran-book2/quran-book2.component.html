@@ -1,22 +1,14 @@
 
-<button (click)="toggleMode()">
+<!--<button (click)="toggleMode()">
   {{ mode === 'ayah' ? 'Switch to Character Mode' : 'Switch to Ayah Mode' }}
-</button>
+</button>-->
 <div class="Quran-main" style="display: flex; flex-direction: column; gap: 10px;">
-  <div class="Quran-border">
       <div class="Quran-page" >
           <div #quranPage class="Quran-text">
                 <app-quran-line *ngFor="let line of pageLines" [line]="line"></app-quran-line>
           </div>
-        
-      </div>
-      
-    <div *ngIf="activeAyah" class="note-modal">
-      <h3>Note for Ayah {{ activeAyah }}</h3>
-      <textarea [(ngModel)]="ayahNotes[activeAyah]"></textarea>
-      <button (click)="closeNoteModal()">Close</button>
-    </div>
-  </div>
+          
+          <div class="bottom-line"></div>
   <div class="pageNavigator">
         <app-surah-navigator  
           [value]="pageNumber" 
@@ -27,4 +19,12 @@
           (Onmanual)="handleManualInput($event)">
         </app-surah-navigator>
   </div>
+      </div>
+      
+    <div *ngIf="activeAyah" class="note-modal">
+      <h3>Note for Ayah {{ activeAyah }}</h3>
+      <textarea [(ngModel)]="ayahNotes[activeAyah]"></textarea>
+      <button (click)="closeNoteModal()">Close</button>
+    </div>
+
 </div>

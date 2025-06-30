@@ -12,3 +12,26 @@
   justify-items: center;
   margin: 0%;
 }
+
+.bottom-line {
+width: 100%;
+height: 1px;
+background-color: lightgray;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;  /* Horizontal */
+  align-items: center; 
+  max-height:30px ;
+}
+.navigation-btn
+{
+margin-left: 5px;
+margin-right: 5px;
+font-family: sans-serif;
+background-color: lightgray;
+max-height:30px ;
+padding: 0px;
+}
