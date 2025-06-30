@@ -5,3 +5,10 @@
   text-align: justify;
   font-family: 'Scheherazade', serif;
 }
+.pageNavigator
+{
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  margin: 0%;
+}

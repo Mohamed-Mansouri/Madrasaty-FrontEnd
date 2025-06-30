@@ -833,8 +833,7 @@ tajweed.gen:hover {
 
 .Quran-text {
 
-  line-height: 1.1;
-
+line-height : 1.1
 }
 
 
@@ -850,17 +849,18 @@ tajweed.incorrect {
   font-family: "Scheherazade New", "Amiri", "Traditional Arabic", serif;
   font-size: 30px;
   line-height: 2.3;
-  background: #eef8f0; /* soft greenish background */
+  /*background: #eef8f0;*/ /* soft greenish background */
   color: #222;
   padding: 40px;
   margin: 20px auto;
   max-width: 800px;
-  border: 8px solid #9ac37f;
+  /*border: 8px solid #9ac37f;*/
   border-radius: 15px;
-  box-shadow: 0 0 25px rgba(0, 100, 0, 0.2);
+  /*box-shadow: 0 0 25px rgba(0, 100, 0, 0.2);*/
   text-align: justify;
   word-spacing: 5px;
   position: relative;
+  transform: scale(0.9);
 }
 
 .Quran-title {
@@ -1059,4 +1059,33 @@ tajweed.incorrect {
 .red
 {
     color: red;
+}
+.basmalah
+{
+  width : fit-content ;
+  height : 80px ; 
+  display: flex ; 
+  flex-direction: column;
+  justify-self: center;
+}
+.surahName
+{
+    background: url("assets/image/sura-frame.png") no-repeat center center;
+    margin: 5px 0px;
+    text-align: center;
+    font-family: "AmiriBold";
+    line-height: 45px;
+    height: 49px;
+    display: flex;
+    justify-content: center; 
+    align-items: center;    
+}
+.Quran-border {
+    background: url("assets/image/Quran_Border.png") no-repeat center center;
+    background-size: contain;
+  /* Adjust for visible border */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
 }

@@ -3,12 +3,12 @@
 
     <!-- Surah Title -->
     <ng-container *ngIf="ayah.number === -1">
-      <div class="suraHeaderFrame">{{ ayah.text }}</div>
+      <div class="surahName">{{ ayah.text }}</div>
     </ng-container>
 
     <!-- Basmalah -->
     <ng-container *ngIf="ayah.number === -2">
-      <div class="basmalah">{{ ayah.text }}</div>
+      <img class="basmalah" src="assets/image/basmala.png" >
     </ng-container>
 
     <!-- Regular Ayah (character mode with innerHTML per char) -->

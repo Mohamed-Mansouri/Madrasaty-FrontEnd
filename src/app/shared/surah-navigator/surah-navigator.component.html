@@ -1,0 +1,20 @@
+<div class="number-picker-container">
+  <button mat-icon-button 
+          (click)="Ondecrement.emit()" 
+          [disabled]="value <= min">
+    <mat-icon>arrow_left</mat-icon>
+  </button>
+
+  <input matInput type="number"
+         [(ngModel)]="value"
+         (ngModelChange)="Onmanual.emit(value)"
+         class="surah-input"
+         [min]="min"
+         [max]="max" />
+
+  <button mat-icon-button 
+          (click)="Onincrement.emit()" 
+          [disabled]="value >= max">
+    <mat-icon>arrow_right</mat-icon>
+  </button>
+</div>

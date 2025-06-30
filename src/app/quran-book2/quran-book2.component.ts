@@ -5,12 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { QuranLineComponent } from '../quran-line/quran-line.component';
 import { Ayah, AyahTajweedData, PageLine } from '../models/TajweedID';
+import { SurahNavigatorComponent } from '../shared/surah-navigator/surah-navigator.component';
 
 declare var Tajweed: any;
 
 @Component({
   selector: 'app-quran-book2',
-  imports: [CommonModule,FormsModule,QuranLineComponent],
+  imports: [CommonModule,FormsModule,QuranLineComponent,SurahNavigatorComponent],
   templateUrl: './quran-book2.component.html',
   styleUrl: './quran-book2.component.css'
 })
@@ -18,14 +19,35 @@ export class QuranBook2Component {
 ayahs: Ayah[] = [];
 pageLines: PageLine[] = [];
 parsedHtml: SafeHtml = '';
+pageNumber : number = 1 ; 
+surahMin : number = 1 ; 
+surahMax : number = 604 ; 
   constructor(private http: HttpClient,private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
 
+      this.loadSurahPage();
+ 
+  
+}
 
-  this.http.get(`assets/quran_lines_with_text2.json`).subscribe({
+mode: 'ayah' | 'char' = 'ayah';
+activeAyah: number | null = null;
+ayahNotes: { [key: number]: string } = {};
+
+toggleMode() {
+  this.mode = this.mode === 'ayah' ? 'char' : 'ayah';
+  this.applyModeHighlighting();
+}
+
+closeNoteModal() {
+  this.activeAyah = null;
+}
+loadSurahPage()
+{
+   this.http.get(`assets/quran_lines_with_text2.json`).subscribe({
     next: (response: PageLine[]) => {
-      let tempPagelines = response.filter(item => item.page === 3)
+      let tempPagelines = response.filter(item => item.page === this.pageNumber)
       //this.pageLines = response.filter(item => item.page === 3);
 
       let tajweed : AyahTajweedData[];
@@ -47,22 +69,7 @@ parsedHtml: SafeHtml = '';
       console.error('Failed to load ayah:', err);
     }
   });
-  
 }
-
-mode: 'ayah' | 'char' = 'ayah';
-activeAyah: number | null = null;
-ayahNotes: { [key: number]: string } = {};
-
-toggleMode() {
-  this.mode = this.mode === 'ayah' ? 'char' : 'ayah';
-  this.applyModeHighlighting();
-}
-
-closeNoteModal() {
-  this.activeAyah = null;
-}
-
 applyModeHighlighting() {
   setTimeout(() => {
     document.querySelectorAll('.ayah').forEach((el: Element) => {
@@ -97,5 +104,25 @@ loadTajweedIntoAyahs(data: AyahTajweedData[], ayahs: Ayah[],surahid:number) {
   });
   
 }
+  decrement() {
+    if (this.pageNumber > this.surahMin) {
+      this.pageNumber--;
+      this.loadSurahPage();
 
+    }
+  }
+
+  increment() {
+    if (this.pageNumber < this.surahMax) {
+      this.pageNumber++;
+      this.loadSurahPage();
+
+    }
+  }
+  handleManualInput(inputValue: number) {
+  const page = Math.max(this.surahMin, Math.min(inputValue, this.surahMax));
+  this.pageNumber = page;
+  this.loadSurahPage(); 
 }
+}
+
