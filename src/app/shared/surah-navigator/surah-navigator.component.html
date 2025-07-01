@@ -9,7 +9,7 @@
   <div>
     <input matInput
          [(ngModel)]="value" 
-         (ngModelChange)="Onmanual.emit(value)"
+         (keydown.enter)="Onmanual.emit(value)"
          class="surah-input"
          [min]="min"
          [max]="max"

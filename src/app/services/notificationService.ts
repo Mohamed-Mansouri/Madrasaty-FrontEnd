@@ -11,4 +11,7 @@ export class SharedService {
   selectAyah(AyahChar: AyahChar): void {
     this.ayahSelectedSubject.next(AyahChar);
   }
+  reset(): void {
+    this.ayahSelectedSubject.next(null);
+  }
 }

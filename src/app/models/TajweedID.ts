@@ -59,4 +59,12 @@ export class PageLine
   ayah:number;
   surah:number;
   page:number;
+  rule : string;
+}
+
+export class TajweedRuleInfo {
+  type : string ; 
+  Name: string;
+  description: string;
+  possible_errors: string[];
 }

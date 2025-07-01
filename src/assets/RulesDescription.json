@@ -1,5 +1,6 @@
-{
-  "hamzat-wasl": {
+[
+  {
+    "type": "hamzat-wasl",
     "Name": "همزة وصل",
     "description": "همزة وصل تُنطق عند بداية التلاوة وتسقط في الوصل.",
     "possible_errors": [
@@ -8,7 +9,8 @@
       "تشكيل غير صحيح عند البدء"
     ]
   },
-  "silent": {
+  {
+    "type": "silent",
     "Name": "سكون",
     "description": "حرف ساكن مكتوب ولكن لا يُنطق.",
     "possible_errors": [
@@ -17,7 +19,8 @@
       "تجاهل الوقف على الحرف الساكن"
     ]
   },
-  "lam_shamsiyyah": {
+  {
+    "type": "lam_shamsiyyah",
     "Name": "لام شمسية",
     "description": "لام شمسية تُدغم في الحرف الشمسي الذي يليها.",
     "possible_errors": [
@@ -26,7 +29,8 @@
       "إدغام في غير موضعه (لام قمرية)"
     ]
   },
-  "madd_2": {
+  {
+    "type": "madd_2",
     "Name": "مد طبيعي",
     "description": "مد طبيعي بمقدار حركتين.",
     "possible_errors": [
@@ -35,7 +39,8 @@
       "توقف أثناء المد"
     ]
   },
-  "madd_246": {
+  {
+    "type": "madd_246",
     "Name": "مد جائز",
     "description": "مد جائز يمكن مده 2، 4 أو 6 حركات.",
     "possible_errors": [
@@ -44,7 +49,8 @@
       "عدم تطبيق المد رغم وجود السبب"
     ]
   },
-  "madda_necesssary": {
+  {
+    "type": "madda_necesssary",
     "Name": "مد لازم",
     "description": "مد لازم يُمد 6 حركات بسبب سكون لازم.",
     "possible_errors": [
@@ -53,7 +59,8 @@
       "تجاهل السكون اللازم"
     ]
   },
-  "qalaqah": {
+  {
+    "type": "qalaqah",
     "Name": "قلقلة",
     "description": "قلقلة: اهتزاز صوتي عند الوقف على الحروف القلقلية.",
     "possible_errors": [
@@ -62,7 +69,8 @@
       "مبالغة في صوت القلقلة"
     ]
   },
-  "madda-obligatory": {
+  {
+    "type": "madda-obligatory",
     "Name": "مد واجب",
     "description": "مد واجب متصل يُمد عادة 4–5 حركات لاتصال الهمزة.",
     "possible_errors": [
@@ -71,7 +79,8 @@
       "إهمال الهمزة بعد حرف المد"
     ]
   },
-  "ikhafa_shafawi": {
+  {
+    "type": "ikhafa_shafawi",
     "Name": "إخفاء شفوي",
     "description": "إخفاء شفوي: إخفاء الميم الساكنة عند حرف الباء مع غنة.",
     "possible_errors": [
@@ -80,7 +89,8 @@
       "موضع الشفتين غير صحيح"
     ]
   },
-  "ikhafa": {
+  {
+    "type": "ikhafa",
     "Name": "إخفاء",
     "description": "إخفاء: إخفاء النون الساكنة أو التنوين عند حرف الإخفاء مع غنة.",
     "possible_errors": [
@@ -89,7 +99,8 @@
       "انقطاع قبل تطبيق الإخفاء"
     ]
   },
-  "idgham_shafawi": {
+  {
+    "type": "idgham_shafawi",
     "Name": "إدغام شفوي",
     "description": "إدغام شفوي: إدغام الميم الساكنة في ميم متحركة مع غنة.",
     "possible_errors": [
@@ -98,7 +109,8 @@
       "إغلاق غير صحيح للشفتين"
     ]
   },
-  "iqlab": {
+  {
+    "type": "iqlab",
     "Name": "إقلاب",
     "description": "إقلاب: قلب النون الساكنة أو التنوين إلى ميم عند حرف الباء مع غنة.",
     "possible_errors": [
@@ -107,7 +119,8 @@
       "نطق الميم بشكل خاطئ"
     ]
   },
-  "idgham_with_ghunnah": {
+  {
+    "type": "idgham_with_ghunnah",
     "Name": "إدغام مع غنة",
     "description": "إدغام مع غنة في النون الساكنة أو التنوين بحروف 'ينمو'.",
     "possible_errors": [
@@ -116,7 +129,8 @@
       "مد مفرط للغنة"
     ]
   },
-  "idgham_without_ghunnah": {
+  {
+    "type": "idgham_without_ghunnah",
     "Name": "إدغام بدون غنة",
     "description": "إدغام بدون غنة في النون الساكنة أو التنوين في 'لام' أو 'راء'.",
     "possible_errors": [
@@ -125,7 +139,8 @@
       "فصل واضح بين الحرفين"
     ]
   },
-  "idgham_mutajanisayn": {
+  {
+    "type": "idgham_mutajanisayn",
     "Name": "إدغام متماثلين",
     "description": "إدغام متماثلين: إدغام حرفين بنفس المخرج والصفة.",
     "possible_errors": [
@@ -134,7 +149,8 @@
       "نطق غير واضح للحرف المدغم"
     ]
   },
-  "idgham_mutaqaribayn": {
+  {
+    "type": "idgham_mutaqaribayn",
     "Name": "إدغام متقاربين",
     "description": "إدغام متقاربين: إدغام حرفين متقاربي المخرج مثل 'ق' و'ك'.",
     "possible_errors": [
@@ -143,7 +159,8 @@
       "إضافة غنة غير مطلوبة"
     ]
   },
-  "ghunnah": {
+  {
+    "type": "ghunnah",
     "Name": "غنة",
     "description": "غنة: صوت أنفي يُمد بمقدار حركتين.",
     "possible_errors": [
@@ -153,4 +170,4 @@
       "نطق غير أنفي للغنة"
     ]
   }
-}
+]

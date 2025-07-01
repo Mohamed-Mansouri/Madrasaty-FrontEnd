@@ -78,11 +78,12 @@ if (!number) return;
             char,
             index: i,
             word: wordIndex,
-            ruleClass: linkedmatchrule ? 'red' : '',
+            ruleClass: linkedmatchrule ? linkedmatchrule.rule : '',
             isTajweed: linkedmatchrule ? 1 : 0,
             ayah:ayah.number,
             surah:line.surahid,
-            page:line.page
+            page:line.page,
+            rule : linkedmatchrule ? linkedmatchrule.rule : '',
           });
             linkedmatchrule = null;
           }else
@@ -95,7 +96,8 @@ if (!number) return;
                         isTajweed: matchRule ? 1 : 0,
                         ayah:ayah.number,
                         surah:line.surahid,
-                        page:line.page
+                        page:line.page,
+                        rule : matchRule ? matchRule.rule : ''
                       });
           }
 
@@ -110,7 +112,7 @@ if (!number) return;
         // Add space after word if needed
         chartst.push({ char: ' ', index: -1, word: wordIndex, ruleClass: '', isTajweed:0,ayah:ayah.number,
             surah:line.surahid,
-            page:line.page });
+            page:line.page , rule :''});
         localwordindex++;
         wordIndex++;
   }

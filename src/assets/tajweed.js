@@ -309,10 +309,6 @@ class Buck {
 
   }
 
-module.exports = {
-  Tajweed: Tajweed,
-  Buck: Buck
-};
 
 window.Tajweed = Tajweed;
 window.Buck = Buck;

@@ -6,6 +6,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { QuranLineComponent } from '../quran-line/quran-line.component';
 import { Ayah, AyahChar, AyahTajweedData, PageLine } from '../models/TajweedID';
 import { SurahNavigatorComponent } from '../shared/surah-navigator/surah-navigator.component';
+import { TajweedService } from '../services/tajweed.service';
 
 declare var Tajweed: any;
 
@@ -23,7 +24,7 @@ pageNumber : number = 1 ;
 surahMin : number = 1 ; 
 surahMax : number = 604 ; 
 @Output() OnCharClick = new EventEmitter<AyahChar>();
-  constructor(private http: HttpClient,private sanitizer: DomSanitizer) {}
+  constructor(private http: HttpClient,private sanitizer: DomSanitizer,private TjwService:TajweedService) {}
 
   ngOnInit(): void {
 
@@ -52,7 +53,7 @@ loadSurahPage()
       //this.pageLines = response.filter(item => item.page === 3);
 
       let tajweed : AyahTajweedData[];
-       this.http.get<AyahTajweedData[]>('assets/tajweed_annotations.json').subscribe({
+       this.TjwService.loadTajweedAnnotations().subscribe({
                       next: data => {
                         tajweed = data;
                          tempPagelines.forEach(line=>{

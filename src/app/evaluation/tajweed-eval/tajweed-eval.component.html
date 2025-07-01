@@ -1,3 +1,15 @@
-<div class="vertical-div white-rounded-shd" style="width: 500px;height: 300px;">
-<h3>{{selectedTajweedChar?.ruleClass}}</h3>
+<div class="vertical-div white-rounded-shd" style="width: 500px;height: 300px;" *ngIf="selectedTajweedChar">
+    <h3>{{selectedTajweedChar?.ruleClass}}</h3>
+
+    <label id="example-radio-group-label">Choisir l'erreur</label>
+        <mat-radio-group
+        aria-labelledby="example-radio-group-label"
+        class="example-radio-group"
+        [(ngModel)]="selectederror">
+        @for (error of selectedRule?.possible_errors; track error) {
+            <mat-radio-button class="example-radio-button" [value]="error">{{error}}</mat-radio-button>
+        }
+        </mat-radio-group>
+   
+
 </div>
