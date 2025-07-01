@@ -8,3 +8,13 @@
 .example-radio-button {
   margin: 5px;
 }
+.mat-mdc-radio-button .example-radio-button .mat-accent .mat-mdc-radio-checked .cdk-focused .cdk-mouse-focused 
+{
+  box-shadow: none !important;
+  outline: none !important;
+}
+mat-mdc-radio-button example-radio-button mat-accent mat-mdc-radio-checked cdk-focused cdk-mouse-focused
+{
+  box-shadow: none !important;
+  outline: none !important;
+}

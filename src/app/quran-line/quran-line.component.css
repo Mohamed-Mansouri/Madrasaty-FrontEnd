@@ -10,14 +10,14 @@
 .lam_shamsiyyah {
   background-color: rgba(255, 0, 0, 0.2);
 }*/
-.madd_2 { color: #537FFF; }
+.madd_2 { color: #ce9e00; }
 .madd_246 { color: #4050FF; }
 .hamzat_wasl { color: #AAAAAA; }
 .lam_shamsiyyah { color: #AAAAAA; }
-.silent { color: #AAAAAA; }
-.qalaqah { color: #DD0008; }
-.ghunnah { color: #FF7E1E; }
-.ikhafa { color: #9400A8; }  
+.silent { color: #a5a5a5; }
+.qalaqah { color:  #2fadff; }
+.ghunnah { color: #09b000; }
+.ikhafa { color: #09b000; }  
 
 .highlight
 {

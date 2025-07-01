@@ -141,6 +141,7 @@ getTajweedClass(rule: TajweedRule): string {
 }
 
 OnCharClick(char:AyahChar){
+  if(char.isTajweed)
     this.sharedService.selectAyah(char);
   }
 
